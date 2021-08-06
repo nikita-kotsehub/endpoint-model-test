@@ -1,10 +1,5 @@
 def global_face_prediction(img):
-    import warnings
-    warnings.filterwarnings("ignore")
-    import os
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-    from silence_tensorflow import silence_tensorflow
-    silence_tensorflow()
+
     
     import pickle
     from PIL import Image
@@ -16,16 +11,15 @@ def global_face_prediction(img):
     from numpy import expand_dims
     from tensorflow.keras.models import load_model
     
-    model_file = '/home/nikita/globus1/endpoint-model-test/facenet_keras.h5'
-    filename = '/home/nikita/globus1/endpoint-model-test/finalized_model.sav'
+    model_file = '/home/nikita/globus2/endpoint-model-test/facenet_keras.h5'
+    filename = '/home/nikita/globus2/endpoint-model-test/finalized_model.sav'
     #filename = 'finalized_model.sav'
     model = pickle.load(open(filename, 'rb'))
     
-    try:
+
     #model_file = 'facenet_keras.h5'
-        model2 = load_model(model_file)
-    except:
-        return "JOPA :("
+    model2 = load_model(model_file)
+
     
     # extract a single face from a given photograph
     def extract_face(image, required_size=(160, 160)):
