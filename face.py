@@ -3,11 +3,11 @@ def global_face_prediction(img):
     from PIL import Image
     import io
     
-    
+    from mtcnn.mtcnn import MTCNN
     from numpy import asarray
     
     from numpy import expand_dims
-    from keras.models import load_model
+    from tensorflow.keras.models import load_model
     
     model_file = '/home/nikita/globus1/endpoint-model-test/facenet_keras.h5'
     filename = '/home/nikita/globus1/endpoint-model-test/finalized_model.sav'
@@ -20,7 +20,6 @@ def global_face_prediction(img):
     except:
         return "JOPA :("
     
-    from mtcnn.mtcnn import MTCNN
     # extract a single face from a given photograph
     def extract_face(image, required_size=(160, 160)):
         # load image from file
