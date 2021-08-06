@@ -1,4 +1,6 @@
 def global_face_prediction(img):
+    import os
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
     import pickle
     from PIL import Image
     import io
