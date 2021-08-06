@@ -81,3 +81,8 @@ def global_face_prediction(img)
     
     class_index, class_probability, face_pixels = predict_person(img)
     return class_index, class_probability
+            
+            
+from PIL import Image
+test_image1 = Image.open("nikita_test_3.jpg")
+print(global_face_prediction(test_image1))
