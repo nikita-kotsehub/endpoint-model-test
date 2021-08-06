@@ -3,6 +3,9 @@ def global_face_prediction(img):
     warnings.filterwarnings("ignore")
     import os
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+    from silence_tensorflow import silence_tensorflow
+    silence_tensorflow()
+    
     import pickle
     from PIL import Image
     import io
