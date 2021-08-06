@@ -1,4 +1,4 @@
-def global_face_prediction(img)
+def global_face_prediction(img):
     import pickle
     from PIL import Image
     import io
@@ -9,19 +9,19 @@ def global_face_prediction(img)
     from numpy import expand_dims
     from keras.models import load_model
     
-    model_file = 'homenikitaglobus1endpoint-model-testfacenet_keras.h5'
-    filename = 'homenikitaglobus1endpoint-model-testfinalized_model.sav'
+    model_file = '/home/nikita/globus1/endpoint-model-test/facenet_keras.h5'
+    filename = '/home/nikita/globus1/endpoint-model-test/finalized_model.sav'
     #filename = 'finalized_model.sav'
     model = pickle.load(open(filename, 'rb'))
     
-    try
+    try:
     #model_file = 'facenet_keras.h5'
         model2 = load_model(model_file)
-    except
-        return JOPA (
+    except:
+        return "JOPA :("
     
     # extract a single face from a given photograph
-    def extract_face(image, required_size=(160, 160))
+    def extract_face(image, required_size=(160, 160)):
         # load image from file
         #image = Image.open(filename)
         # convert to RGB, if needed
@@ -38,7 +38,7 @@ def global_face_prediction(img)
         x1, y1 = abs(x1), abs(y1)
         x2, y2 = x1 + width, y1 + height
         # extract the face
-        face = pixels[y1y2, x1x2]
+        face = pixels[y1:y2, x1:x2]
         # resize pixels to the model size
         image = Image.fromarray(face)
         image = image.resize(required_size)
@@ -46,19 +46,19 @@ def global_face_prediction(img)
         return face_array
     
     # get the face embedding for one face
-    def get_embedding(model, face_pixels)
+    def get_embedding(model, face_pixels):
         # scale pixel values
         face_pixels = face_pixels.astype('float32')
         # standardize pixel values across channels (global)
         mean, std = face_pixels.mean(), face_pixels.std()
-        face_pixels = (face_pixels - mean)  std
+        face_pixels = (face_pixels - mean) / std
         # transform face into one sample
         samples = expand_dims(face_pixels, axis=0)
         # make prediction to get embedding
         yhat = model.predict(samples)
         return yhat[0]
     
-    def predict_person(img)
+    def predict_person(img):
         #img = Image.open(io.BytesIO(img))
         #script_dir = pathlib.Path(__file__).parent.absolute()
         #model_file = os.path.join(script_dir, 'facenet_keras.h5')
@@ -75,14 +75,13 @@ def global_face_prediction(img)
         yhat_prob = model.predict_proba(samples)
 
         class_index = yhat_class[0]
-        class_probability = yhat_prob[0,class_index]  100
+        class_probability = yhat_prob[0,class_index] * 100
 
         return class_index, class_probability, face_pixels
     
     class_index, class_probability, face_pixels = predict_person(img)
     return class_index, class_probability
-            
-            
+
 from PIL import Image
 test_image1 = Image.open("nikita_test_3.jpg")
 print(global_face_prediction(test_image1))
